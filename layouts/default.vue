@@ -17,14 +17,15 @@
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <a v-for="item in navigation" :key="item.name" :href="item.href"
+              <NuxtLink v-for="item in navigation" :key="item.name" :to="item.href"
                 :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']"
                 :aria-current="item.current ? 'page' : undefined">
                 <component :is="item.icon" class="size-4 inline-block mr-2" />
                 {{ item.name }}
-              </a>
+              </NuxtLink>
               <label class="inline-flex items-center me-5 cursor-pointer">
-                <input type="checkbox" class="sr-only peer" :checked="devMode" @change="toggleDevMode">
+                <input type="checkbox" class="sr-only peer" :checked="devModeStore.isDevMode"
+                  @change="devModeStore.toggleDevMode">
                 <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-900 pr-1">dev mode</span>
                 <InformationCircleIcon class="block size-6  pr-2" aria-hidden="true" />
                 <div
@@ -54,9 +55,9 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon, HomeIcon, ListBulletIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useDevMode } from '../composables/useDevMode'
+import { useDevModeStore } from '~/stores/devMode'
 
-const { devMode, toggleDevMode } = useDevMode()
+const devModeStore = useDevModeStore()
 const route = useRoute()
 const navigation = computed(() => [
   {

@@ -6,10 +6,10 @@
 </template>
 
 <script setup>
-import { useDevMode } from '../composables/useDevMode'
+import { useDevModeStore } from '~/stores/devMode'
 import mockSports from '~/assets/mock-data/sports.json'
 
-const { devMode } = useDevMode()
-const { data: sports } = devMode ? { data: ref(mockSports) } : await useFetch('/api/sports')
+const devModeStore = useDevModeStore()
+const { data: sports } = devModeStore.isDevMode ? { data: ref(mockSports) } : await useFetch('/api/sports')
 const sportKey = ref(null)
 </script>

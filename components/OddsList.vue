@@ -1,5 +1,5 @@
 <template>
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5" v-if="odds.data">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
@@ -45,17 +45,17 @@
 </template>
 
 <script setup>
-import { useDevMode } from '../composables/useDevMode'
+import { useDevModeStore } from '~/stores/devMode'
 import mockSpreads from '~/assets/mock-data/spreads.json'
 
-const { devMode } = useDevMode()
+const devModeStore = useDevModeStore()
 const props = defineProps({
   sportKey: {
     type: String,
     required: true
   }
 })
-const { data: odds } = devMode ? { data: ref(mockSpreads) } : await useFetch('/api/odds', {
+const { data: odds } = devModeStore.isDevMode ? { data: ref(mockSpreads) } : await useFetch('/api/odds', {
   query: {
     sportKey: props.sportKey
   }
