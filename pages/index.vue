@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SportsSelect :sports="sports.data" @update:sport-key="sportKey = $event" />
+    <SportsSelect :sports="sports.data" @update:sport-key="updateSportKey" />
     <OddsList v-if="sportKey" :sport-key="sportKey" />
   </div>
 </template>
@@ -12,6 +12,10 @@ import mockSports from '~/assets/mock-data/sports.json'
 const devModeStore = useDevModeStore()
 const { data: sports } = devModeStore.isDevMode ? { data: ref(mockSports) } : await useFetch('/api/sports')
 const sportKey = ref(null)
+
+const updateSportKey = (key) => {
+  sportKey.value = key
+}
 
 watch(() => devModeStore.isDevMode, async (newValue) => {
   if (newValue) {

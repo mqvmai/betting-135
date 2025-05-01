@@ -4,7 +4,12 @@
       class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">
       Mock Data
     </span>
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-black-900 mt-10" v-if="odds.data"
+    <span v-else>
+      <span
+        class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">Real
+        Data</span>
+    </span>
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-black-900 mt-10" v-if="odds?.data"
       v-for="odd in odds.data" :key="odd.id">
       <thead class="text-xs text-white uppercase bg-gray-500 dark:bg-black dark:text-white-900">
         <tr>
@@ -72,11 +77,22 @@ const props = defineProps({
     required: true
   }
 })
-const { data: odds } = devModeStore.isDevMode ? { data: ref(mockSpreads) } : await useFetch('/api/odds', {
-  query: {
-    sportKey: props.sportKey
+
+const odds = ref(null)
+
+const fetchOddsForSport = async () => {
+  if (devModeStore.isDevMode) {
+    odds.value = mockSpreads
+    console.log('odds', odds.value)
+  } else {
+    const { data } = await useFetch('/api/odds', {
+      query: {
+        sportKey: props.sportKey
+      }
+    })
+    odds.value = data.value
   }
-})
+}
 
 const findOdds = (odd, bookmaker, teamType) => {
   if (!odd || !bookmaker) return ''
@@ -90,4 +106,11 @@ const findOdds = (odd, bookmaker, teamType) => {
 const formatDate = (date) => {
   return moment(date).format('MM-DD-YYYY hh:mm a')
 }
+
+fetchOddsForSport()
+
+watch(() => props.sportKey, () => {
+  fetchOddsForSport()
+})
+
 </script>

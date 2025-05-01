@@ -17,10 +17,6 @@ export default defineEventHandler(async (event) => {
         dateFormat: DATE_FORMAT,
       }
     })
-
-    console.log('Remaining requests', response?.headers?.['x-requests-remaining'])
-    console.log('Used requests', response?.headers?.['x-requests-used'])
-
     return {
       data: response,
     }
