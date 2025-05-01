@@ -55,10 +55,12 @@
   <div class="container mx-auto p-4">
     <slot />
   </div>
+  <Analytics />
 </template>
 
 <script setup>
 import { FwbTooltip } from 'flowbite-vue'
+import { Analytics } from '@vercel/analytics/nuxt'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon, HomeIcon, ListBulletIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
 import { computed } from 'vue'
