@@ -26,8 +26,15 @@
               <label class="inline-flex items-center me-5 cursor-pointer">
                 <input type="checkbox" class="sr-only peer" :checked="devModeStore.isDevMode"
                   @change="devModeStore.toggleDevMode">
-                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-900 pr-1">dev mode</span>
-                <InformationCircleIcon class="block size-6  pr-2" aria-hidden="true" />
+                <span class="ms-3 text-xs font-xs text-gray-900 dark:text-gray-900 pr-1">dev mode</span>
+                <fwb-tooltip>
+                  <template #trigger>
+                    <InformationCircleIcon class="block size-6  pr-2" aria-hidden="true" />
+                  </template>
+                  <template #content>
+                    turn on dev mode to use mock data (API has limited requests)
+                  </template>
+                </fwb-tooltip>
                 <div
                   class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600 dark:peer-checked:bg-red-600">
                 </div>
@@ -51,6 +58,7 @@
 </template>
 
 <script setup>
+import { FwbTooltip } from 'flowbite-vue'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon, HomeIcon, ListBulletIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
 import { computed } from 'vue'

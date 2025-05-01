@@ -6,7 +6,6 @@ export const useDevModeStore = defineStore('devMode', {
   },
   actions: {
     toggleDevMode() {
-      console.log(`toggleDevMode ${this.isDevMode} going to ${!this.isDevMode}`)
       this.isDevMode = !this.isDevMode
     }
   },
